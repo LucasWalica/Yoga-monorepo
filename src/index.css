@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+
+  --color-terracota-50: #faf6f2;
+  --color-terracota-100: #f2e8dd;
+  --color-terracota-200: #e5cfba;
+  --color-terracota-300: #d5af8e;
+  --color-terracota-400: #c4956a;
+  --color-terracota-500: #b67d4e;
+  --color-terracota-600: #a56a42;
+  --color-terracota-700: #8a5538;
+  --color-terracota-800: #704634;
+  --color-terracota-900: #5c3a2d;
+
+  --color-salvia-50: #f3f7f2;
+  --color-salvia-100: #e4ede2;
+  --color-salvia-200: #cadcc8;
+  --color-salvia-300: #a6c4a5;
+  --color-salvia-400: #8fae8b;
+  --color-salvia-500: #6f916c;
+  --color-salvia-600: #557553;
+  --color-salvia-700: #455d44;
+  --color-salvia-800: #394b39;
+  --color-salvia-900: #303f30;
+
+  --color-arena-50: #faf8f5;
+  --color-arena-100: #f5f0eb;
+  --color-arena-200: #e9dfd4;
+  --color-arena-300: #d9c8b5;
+  --color-arena-400: #c6ab90;
+  --color-arena-500: #b8967a;
+
+  --color-tinta-950: #3d2b1f;
+  --color-tinta-900: #4a3526;
+  --color-tinta-700: #6d5543;
+  --color-tinta-500: #8a7160;
+  --color-tinta-300: #b3a294;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  @apply bg-arena-100 text-tinta-950 font-sans antialiased;
+}
+
+section[id] {
+  scroll-margin-top: 80px;
+}
