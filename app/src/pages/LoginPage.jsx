@@ -5,7 +5,6 @@ import {
   IonItem,
   IonInput,
   IonButton,
-  IonSpinner,
   IonText,
   IonCard,
   IonCardContent,
@@ -98,7 +97,7 @@ export function LoginPage() {
                   className="btn-primary"
                   style={{marginBottom: '24px', padding: '18px 32px', fontSize: '1.1rem'}}
                 >
-                  {busy ? <IonSpinner name="crescent" /> : 'Entrar'}
+                  {busy ? <span className="btn-spinner" /> : 'Entrar'}
                 </IonButton>
               </form>
 

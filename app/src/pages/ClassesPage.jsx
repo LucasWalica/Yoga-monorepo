@@ -10,12 +10,11 @@ import {
   IonLabel,
   IonList,
   IonItem,
-  IonThumbnail,
   IonIcon,
-  IonSpinner,
+  IonNote,
+  IonThumbnail,
   IonRefresher,
   IonRefresherContent,
-  IonNote,
 } from '@ionic/react';
 import { arrowForwardOutline, timeOutline, schoolOutline, peopleOutline, calendarOutline, checkmarkCircleOutline, videocamOutline } from 'ionicons/icons';
 import * as api from '../lib/api';
@@ -86,8 +85,8 @@ export function ClassesPage() {
 
   return (
     <IonPage>
-      <IonHeader style={{ background: 'transparent' }}>
-        <IonToolbar color="light">
+      <IonHeader>
+        <IonToolbar>
           <IonTitle>Clases</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -109,7 +108,7 @@ export function ClassesPage() {
         </IonSegment>
 
         {loading ? (
-          <div className="ion-text-center ion-padding"><IonSpinner name="crescent" /></div>
+          <div className="ion-text-center ion-padding"><span className="spinner-dot" /></div>
         ) : list.length === 0 ? (
           <div className="ion-text-center ion-padding" style={{padding: '48px 16px'}}>
             <span className="icon-circle icon-circle-lg" style={{background: 'var(--color-arena-200)', color: 'var(--color-tinta-500)', margin: '0 auto 16px'}}>

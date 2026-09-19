@@ -9,7 +9,6 @@ import {
   IonCardContent,
   IonIcon,
   IonLabel,
-  IonSpinner,
   IonRefresher,
   IonRefresherContent,
   IonGrid,
@@ -90,7 +89,7 @@ export function AchievementsPage() {
           <IonRefresherContent />
         </IonRefresher>
 
-        <div className="ion-margin-bottom section-head">
+        <div className="ion-margin-bottom">
           <p className="section-subtitle">Logros</p>
           <h2 className="section-title">Tu camino de práctica</h2>
         </div>
@@ -111,15 +110,16 @@ export function AchievementsPage() {
         </IonCard>
 
         {loading ? (
-          <div className="ion-text-center ion-padding"><IonSpinner name="crescent" /></div>
+          <div className="ion-text-center ion-padding"><span className="spinner-dot" /></div>
         ) : (
           <IonGrid>
             <IonRow>
               {achievements.map(a => (
                 <IonCol key={a.code} size="6" size-md="4" className="ion-margin-bottom">
                   <IonCard
-                    className="h-100 card-elevated"
+                    className="card-elevated"
                     style={{
+                      height: '100%',
                       borderRadius: '20px',
                       background: a.unlocked ? 'linear-gradient(135deg, var(--color-terracota-50) 0%, var(--color-arena-50) 100%)' : 'var(--ion-item-background)',
                       border: a.unlocked ? '2px solid var(--color-terracota-200)' : '1px solid var(--ion-border-color)',

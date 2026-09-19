@@ -11,7 +11,6 @@ import {
   IonCard,
   IonCardContent,
   IonNote,
-  IonSpinner,
   IonText,
   IonGrid,
   IonRow,
@@ -97,7 +96,7 @@ export function ClassDetailPage() {
   if (loading) {
     return (
       <IonPage>
-        <IonContent className="ion-text-center ion-padding-top"><IonSpinner name="crescent" /></IonContent>
+        <IonContent><div className="ion-text-center ion-padding"><span className="spinner-dot" /></div></IonContent>
       </IonPage>
     );
   }
@@ -109,8 +108,8 @@ export function ClassDetailPage() {
 
   return (
     <IonPage>
-      <IonHeader style={{ background: 'transparent' }}>
-        <IonToolbar color="light">
+      <IonHeader>
+        <IonToolbar>
           <IonButtons slot="start">
             <IonButton fill="clear" onClick={() => navigate('/classes')}>
               <IonIcon icon={arrowBackOutline} />

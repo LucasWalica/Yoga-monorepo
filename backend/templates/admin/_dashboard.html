@@ -1,0 +1,28 @@
+{% if request.user.is_authenticated %}
+<div style="margin: 20px 0; padding: 20px; background: #fff; border: 1px solid #dee2e6; border-radius: 8px;">
+  <h3 style="margin-top: 0; color: #2c3e50;">Bienvenido de vuelta 🙏</h3>
+  <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+    {% for counter in dashboard_counters %}
+    <div style="flex: 1; min-width: 180px; padding: 16px; background: #f8f6f3; border-radius: 8px;">
+      <div style="font-size: 28px; font-weight: 700; color: #7C9A92;">{{ counter.value }}</div>
+      <div style="color: #6c757d; font-size: 13px;">{{ counter.label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if dashboard_next_classes %}
+  <h4 style="color: #2c3e50; margin-bottom: 8px;">Próximas clases en vivo</h4>
+  <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+    <tbody>
+      {% for clase in dashboard_next_classes %}
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 8px 4px;">{{ clase.title }}</td>
+        <td style="padding: 8px 4px; color: #6c757d;">{{ clase.scheduled_start|date:"l d/m/Y H:i" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="color: #6c757d;">No hay clases en vivo próximas. Creá una desde <em>Clases → Clases en vivo</em>.</p>
+  {% endif %}
+</div>
+{% endif %}

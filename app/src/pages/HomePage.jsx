@@ -6,9 +6,6 @@ import {
   IonToolbar,
   IonTitle,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
   IonCardContent,
   IonButton,
   IonIcon,
@@ -18,9 +15,8 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonNote,
-  IonChip,
 } from '@ionic/react';
-import { addOutline, timeOutline, schoolOutline, trophyOutline, playOutline, calendarOutline, flameOutline, personOutline, chevronForwardOutline, sparklesOutline, leafOutline } from 'ionicons/icons';
+import { timeOutline, schoolOutline, trophyOutline, playOutline, calendarOutline, flameOutline, personOutline, chevronForwardOutline, sparklesOutline, leafOutline, refreshOutline } from 'ionicons/icons';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
@@ -30,18 +26,6 @@ const levelLabels = {
   principiante: 'Principiante',
   intermedio: 'Intermedio',
   avanzado: 'Avanzado',
-};
-
-const fmtRelative = (iso) => {
-  const diff = new Date(iso).getTime() - Date.now();
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.ceil(diff / (1000 * 60 * 60));
-  const minutes = Math.ceil(diff / (1000 * 60));
-  if (days > 1) return `En ${days} días`;
-  if (days === 1) return 'Mañana';
-  if (hours > 0) return `En ${hours}h`;
-  if (minutes > 0) return `En ${minutes}min`;
-  return 'Ahora';
 };
 
 const ytEmbed = (url) => {
@@ -110,45 +94,49 @@ export function HomePage() {
           </div>
         </div>
 
+        <div className="ion-padding-horizontal ion-margin-bottom ion-margin-top">
+          <p className="section-subtitle">Clases programadas</p>
+          <h2 className="section-title">Próximas en vivo</h2>
+        </div>
+
         {nextClass ? (
-          <IonCard className="ion-margin-horizontal ion-margin-bottom card-elevated" style={{borderRadius: '24px', overflow: 'hidden', background: 'linear-gradient(135deg, var(--color-terracota-500) 0%, var(--color-terracota-600) 100%)', color: '#fff'}}>
-            <IonCardHeader style={{padding: '24px 24px 0', borderBottom: 'none'}}>
-              <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap'}}>
-                <IonChip color="light" style={{fontWeight: 600}}><IonIcon icon={sparklesOutline} size="small" slot="start" /> Próxima clase en vivo</IonChip>
-                <IonChip color="light" outline={true} style={{fontWeight: 500}}><IonIcon icon={timeOutline} size="small" slot="start" /> {fmtRelative(nextClass.scheduled_start)}</IonChip>
+          <IonCard className="ion-margin-horizontal ion-margin-bottom card-elevated" style={{borderRadius: '24px', overflow: 'hidden'}}>
+            <div style={{position: 'relative'}}>
+              <div style={{aspectRatio: '16/9', width: '100%', background: '#000'}}>
+                <iframe src={ytEmbed(nextClass.youtube_url)} title={nextClass.title} allowFullScreen style={{width: '100%', height: '100%', border: 0}} />
               </div>
-              <IonCardTitle style={{fontFamily: 'var(--ion-font-serif)', fontSize: '1.5rem', fontWeight: 600, margin: 0}}>{nextClass.title}</IonCardTitle>
-              <IonCardSubtitle style={{marginTop: '8px', opacity: 0.9}}>
-                {nextClass.duration_minutes} min · {levelLabels[nextClass.level] || nextClass.level_display}
-              </IonCardSubtitle>
-            </IonCardHeader>
-            <IonCardContent style={{padding: '0 24px 24px'}}>
-              <div style={{aspectRatio: '16/9', width: '100%', borderRadius: '16px', overflow: 'hidden', background: 'rgba(0,0,0,0.2)', marginBottom: '16px'}}>
-                <iframe src={ytEmbed(nextClass.youtube_url)} allowFullScreen style={{width: '100%', height: '100%', border: 0}} />
+              <span className="live-pill" style={{position: 'absolute', top: '12px', left: '12px'}}>
+                <span className="live-dot" /> Próxima clase en vivo
+              </span>
+            </div>
+            <IonCardContent style={{padding: '20px'}}>
+              <h2 style={{margin: '0 0 14px', fontFamily: 'var(--ion-font-serif)', fontSize: '1.5rem', fontWeight: 600, lineHeight: 1.25, color: 'var(--ion-text-color)'}}>{nextClass.title}</h2>
+              <div style={{display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
+                <span className="meta-pill"><IonIcon icon={calendarOutline} size="small" /> {new Date(nextClass.scheduled_start).toLocaleDateString('es-AR', { weekday: 'long', day: '2-digit', month: 'long' })}</span>
+                <span className="meta-pill"><IonIcon icon={timeOutline} size="small" /> {nextClass.duration_minutes} min</span>
+                <span className="meta-pill"><IonIcon icon={leafOutline} size="small" /> {levelLabels[nextClass.level] || nextClass.level_display}</span>
               </div>
-              <IonButton
-                expand="block"
-                fill="outline"
-                color="light"
-                iconStart={true}
-                icon={playOutline}
-                onClick={() => navigate(`/classes/${nextClass.id}`)}
-                style={{borderRadius: '12px', padding: '16px', fontWeight: 600, fontSize: '1rem'}}
-              >
-                Ver y asistir
-                <IonIcon icon={chevronForwardOutline} slot="end" />
+              <IonButton expand="block" className="btn-primary" style={{marginTop: '18px', padding: '20px 24px', fontSize: '1.05rem'}} onClick={() => navigate(`/classes/${nextClass.id}`)}>
+                <IonIcon icon={playOutline} slot="start" /> Ver y asistir
               </IonButton>
             </IonCardContent>
           </IonCard>
         ) : (
-          <IonCard className="ion-margin-horizontal ion-margin-bottom card-elevated" style={{borderRadius: '24px', padding: '32px 24px', textAlign: 'center', background: 'linear-gradient(135deg, var(--color-salvia-50) 0%, var(--color-arena-50) 100%)', border: '1px solid var(--color-salvia-200)'}}>
-            <IonIcon icon={calendarOutline} size="large" color="secondary" style={{fontSize: '3rem', marginBottom: '16px'}} />
-            <h2 style={{margin: '0 0 8px', fontFamily: 'var(--ion-font-serif)', fontSize: '1.5rem', fontWeight: 600}}>No hay clases programadas</h2>
-            <p style={{margin: '0 0 16px', color: 'var(--ion-color-medium)'}}>Las próximas clases en vivo aparecerán aquí</p>
-            <IonButton fill="outline" iconStart={true} icon={addOutline} onClick={() => navigate('/classes')}>
-              Ver todas las clases
-            </IonButton>
-          </IonCard>
+          <div className="ion-margin-horizontal ion-margin-bottom empty-card">
+            <span className="icon-circle icon-circle-lg" style={{background: 'var(--color-salvia-100)', color: 'var(--color-salvia-600)', margin: '0 auto 18px'}}>
+              <IonIcon icon={leafOutline} size="large" />
+            </span>
+            <h2 className="empty-title">Nada agendado todavía</h2>
+            <p className="empty-text">Las próximas clases en vivo van a aparecer acá. Mientras tanto, una meditación te espera.</p>
+            <div className="empty-actions">
+              <IonButton expand="block" className="btn-primary" onClick={() => navigate('/classes')}>
+                Ver todas las clases <IonIcon icon={chevronForwardOutline} slot="end" />
+              </IonButton>
+              <IonButton expand="block" className="btn-ghost" onClick={() => navigate('/meditation')}>
+                Meditar ahora <IonIcon icon={leafOutline} slot="end" />
+              </IonButton>
+            </div>
+          </div>
         )}
 
         <div className="ion-padding-horizontal ion-margin-bottom">
@@ -272,7 +260,9 @@ export function HomePage() {
         </IonGrid>
 
         <IonNote className="ion-text-center ion-padding">
-          <IonButton fill="clear" onClick={() => reload()}>Refrescar datos</IonButton>
+          <IonButton fill="clear" size="small" className="btn-ghost" onClick={() => reload()}>
+            <IonIcon icon={refreshOutline} slot="start" /> Refrescar datos
+          </IonButton>
         </IonNote>
       </IonContent>
     </IonPage>

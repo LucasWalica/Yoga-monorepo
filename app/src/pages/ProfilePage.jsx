@@ -18,7 +18,6 @@ import {
   IonTextarea,
   IonList,
   IonAvatar,
-  IonSpinner,
   IonRefresher,
   IonRefresherContent,
   IonText,
@@ -178,7 +177,7 @@ export function ProfilePage() {
         <IonCard className="ion-margin-bottom card-elevated" style={{borderRadius: '20px'}}>
           <IonList lines="full">
             {loading ? (
-              <IonItem><IonSpinner slot="start" name="crescent" />Cargando…</IonItem>
+              <IonItem lines="none"><div className="ion-text-center ion-padding"><span className="spinner-dot" /></div></IonItem>
             ) : passkeys.length === 0 ? (
               <IonItem lines="none" className="ion-padding ion-text-center">
                 <IonIcon icon={keyOutline} size="large" color="medium" style={{marginBottom: '8px'}} />
@@ -249,7 +248,7 @@ export function ProfilePage() {
           </IonList>
         </IonCard>
 
-        <IonButton expand="block" fill="outline" color="danger" iconStart={true} icon={logOutOutline} onClick={handleLogout} className="ion-margin-top" style={{borderRadius: '12px'}}>
+        <IonButton expand="block" fill="outline" color="danger" iconStart={true} icon={logOutOutline} onClick={handleLogout} className="ion-margin-top">
           Cerrar sesión
         </IonButton>
 

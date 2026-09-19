@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonContent, IonSpinner } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { homeOutline, listOutline, timeOutline, trophyOutline, personOutline } from 'ionicons/icons';
 import { HomePage } from '@pages/HomePage.jsx';
@@ -12,25 +12,7 @@ import { RegisterPage } from '@pages/RegisterPage.jsx';
 import { ProtectedRoute } from '@components/ProtectedRoute.jsx';
 import { useAuth } from '@context/AuthContext.jsx';
 
-function LoadingScreen() {
-  return (
-    <IonApp>
-      <IonContent>
-        <div className="loading-brand">
-          <div className="brand-mark">S</div>
-          <p className="brand-name">Seba Yoga</p>
-          <IonSpinner name="crescent" />
-        </div>
-      </IonContent>
-    </IonApp>
-  );
-}
-
 function PrivateTabs() {
-  const { loading } = useAuth();
-  if (loading) {
-    return <LoadingScreen />;
-  }
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -71,17 +53,14 @@ function PrivateTabs() {
 }
 
 export function App() {
-  const { user, loading } = useAuth();
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  const { user } = useAuth();
   return (
     <IonApp>
       <IonRouterOutlet>
         <Routes>
           <Route path="/login" element={user ? <Navigate to="/home" replace /> : <LoginPage />} />
           <Route path="/register" element={user ? <Navigate to="/home" replace /> : <RegisterPage />} />
-          <Route path="/*" element={user ? <PrivateTabs /> : <PrivateTabs />} />
+          <Route path="/*" element={<PrivateTabs />} />
         </Routes>
       </IonRouterOutlet>
     </IonApp>

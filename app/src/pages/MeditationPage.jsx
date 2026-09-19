@@ -13,7 +13,6 @@ import {
   IonItem,
   IonInput,
   IonList,
-  IonSpinner,
   IonRefresher,
   IonRefresherContent,
   IonNote,
@@ -39,6 +38,7 @@ import {
   sparklesOutline,
 } from 'ionicons/icons';
 import * as api from '@lib/api';
+
 
 const sounds = [
   { name: 'Ruido blanco suave', url: 'https://assets.mixkit.co/music/preview/mixkit-ambient-lullaby-521.mp3', icon: cloudOutline },
@@ -175,8 +175,6 @@ export function MeditationPage() {
             <IonButton
               expand="block"
               size="large"
-              fill="outline"
-              color={running ? 'danger' : 'primary'}
               iconStart={true}
               icon={running ? pauseOutline : playOutline}
               onClick={running ? pauseTimer : startTimer}
@@ -257,7 +255,7 @@ export function MeditationPage() {
 
             <IonText color="medium"><h3 className="ion-padding-start ion-margin-top section-subtitle">Audios guiados</h3></IonText>
             {loading ? (
-              <div className="ion-text-center ion-padding"><IonSpinner name="crescent" /></div>
+              <div className="ion-text-center ion-padding"><span className="spinner-dot" /></div>
             ) : audios.length === 0 ? (
               <IonText color="medium" className="ion-padding ion-text-center">No hay audios disponibles</IonText>
             ) : (
@@ -287,7 +285,7 @@ export function MeditationPage() {
           <>
             <IonText color="medium"><h3 className="ion-padding-start section-subtitle">Tus sesiones recientes</h3></IonText>
             {loading ? (
-              <div className="ion-text-center ion-padding"><IonSpinner name="crescent" /></div>
+              <div className="ion-text-center ion-padding"><span className="spinner-dot" /></div>
             ) : sessions.length === 0 ? (
               <div className="ion-text-center ion-padding" style={{padding: '48px 16px'}}>
                 <IonIcon icon={calendarOutline} size="large" color="medium" style={{fontSize: '3rem', marginBottom: '16px'}} />
